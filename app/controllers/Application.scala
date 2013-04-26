@@ -95,3 +95,15 @@ object Application extends Controller {
   }
 
 }
+  def githubFollowings = Action {
+    Async {
+      Github.followings map { js => Ok(js) }
+    }
+  }
+
+  def githubEventStream = Action {
+    Async {
+      Github.eventStream map { logins => Ok(Json.toJson(logins)) }
+    }
+  }
+}
