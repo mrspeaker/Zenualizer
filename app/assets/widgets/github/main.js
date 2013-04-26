@@ -1,6 +1,7 @@
 // Github
 
 Widget("github", {
+	timer: null,
   init: function (node) {
     return this.update(node);
   },
@@ -8,12 +9,29 @@ Widget("github", {
   update: function (node) {
 
     return $.getJSON("/github/eventStream").then(function (json) {
-      //node.find(".tweeter").text("here");
-      node.find(".commits").empty();
-      json.slice(0, 12).forEach(function (c) {
-      	console.log(c);
-      	$("<li></li>").text(c.actor.login + ": " + c.payload.commits[0].message).appendTo(node.find(".commits"));
-      });
+
+      var self = this;
+
+    	this.timer && clearTimeout(this.timer);
+
+			node.find(".commits").empty();
+      function print (commits) {
+
+      	var c = commits[0];
+      	if (c.payload.commits) {
+      		$("<li></li>")
+      			.prependTo(node.find(".commits"))
+      			.html("<span class='actor'>" + c.actor.login + "</span>: " + c.payload.commits[0].message);
+      	}
+
+				node.find(".commits li:gt(14)").remove();
+
+      	self.timer = setTimeout(function () {
+      		print(commits.length > 1 ? commits.slice(1) : json)
+      	}, (Math.random() * 1000 | 0) + 300);
+
+      }
+      print(json);
 
     });
   }
