@@ -120,4 +120,16 @@ object Application extends Controller {
       ZenDaily.stream map { Ok(_) }
     }
   }
+  def proxyWeatherMap(req: String) = Action {
+      val url = "http://undefined.tile.openweathermap.org/map/"+req;
+      Async {
+        WS.url(url).get().map { response =>
+          Ok(response.ahcResponse.getResponseBodyAsBytes())
+            .withHeaders(
+              CONTENT_TYPE -> "image/png"
+            );
+        }
+      }
+  }
+
 }

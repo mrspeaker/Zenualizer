@@ -12,7 +12,6 @@ GET     /weather                    controllers.Application.weather
 
 GET     /version                    controllers.Application.version
 
-
 # GITHUB stuff
 GET     /github/followings                  controllers.Application.githubFollowings
 GET     /github/eventStream                 controllers.Application.githubEventStream
@@ -22,6 +21,7 @@ GET     /hackernews/stream                 controllers.Application.hackerNewsStr
 
 # ZenDaily
 GET     /zendaily/stream                 controllers.Application.zendailyStream
+GET     /map/*req               controllers.Application.proxyWeatherMap(req: String)
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
