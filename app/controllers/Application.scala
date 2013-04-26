@@ -105,4 +105,10 @@ object Application extends Controller {
       Github.eventStream map { logins => Ok(Json.toJson(logins)) }
     }
   }
+
+  def hackerNewsStream = Action {
+    Async {
+      HackerNews.stream map { Ok(_) }
+    }
+  }
 }

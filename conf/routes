@@ -16,5 +16,9 @@ GET     /version                    controllers.Application.version
 # GITHUB stuff
 GET     /github/followings                  controllers.Application.githubFollowings
 GET     /github/eventStream                 controllers.Application.githubEventStream
+
+# HN
+GET     /hackernews/stream                 controllers.Application.hackerNewsStream
+
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
