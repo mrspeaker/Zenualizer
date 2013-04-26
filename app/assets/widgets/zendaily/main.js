@@ -6,9 +6,16 @@ Widget("zendaily", {
   },
   rate: 5000,
   update: function (node) {
-    return $.getJSON("/weather").then(function (json) {
-      node.find(".temp").text(Math.round(json.temp));
-      node.find(".descr").text(json.description);
+    return $.getJSON("/zendaily/stream").then(function (json) {
+
+      json.forEach(function (e) {
+
+        console.log(e);
+        $("<li></li>")
+          .text(e.author + " presents... " + e.type + ": " + e.summary)
+          .appendTo(node.find(".stream"))
+      });
+
     });
   }
 });

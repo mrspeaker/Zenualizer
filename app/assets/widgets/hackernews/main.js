@@ -14,8 +14,6 @@ Widget("hackernews", {
 
     return $.getJSON("/hackernews/stream").then(function (json) {
 
-      console.log(json);
-
       function render () {
 
         var head = json[Math.random() * json.length | 0];
