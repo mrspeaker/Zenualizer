@@ -42,18 +42,18 @@ object Application extends Controller {
       )
     )
 
-    implicit val timeLineWrite =
-      Writes.seq(
-         (
-          (__ \ "id").write[Long] and
-          (__ \ "retweeted").write[Boolean] and
-          (__ \ "retweet_count").write[Long] and
-          (__ \ "favorite_count").write[Long] and
-          (__ \ "text").write[String] and
-          (__ \ "username").write[String] and
-          (__ \ "userscreen_name").write[String]
-        ).tupled
-      )
+  implicit val timeLineWrite =
+    Writes.seq(
+       (
+        (__ \ "id").write[Long] and
+        (__ \ "retweeted").write[Boolean] and
+        (__ \ "retweet_count").write[Long] and
+        (__ \ "favorite_count").write[Long] and
+        (__ \ "text").write[String] and
+        (__ \ "username").write[String] and
+        (__ \ "userscreen_name").write[String]
+      ).tupled
+    )
     
   def timeline = Action { implicit request =>
       Async {
@@ -94,7 +94,6 @@ object Application extends Controller {
     }
   }
 
-}
   def githubFollowings = Action {
     Async {
       Github.followings map { js => Ok(js) }
