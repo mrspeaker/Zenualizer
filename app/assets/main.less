@@ -1,4 +1,4 @@
-* { 
+* {
   box-sizing: border-box;
   transition: 1s;
   -webkit-transition: 1s;
@@ -18,13 +18,22 @@ body {
 }
 
 section {
+  position: absolute;
   overflow: hidden;
-  &.boxed {
-    padding: 10px;
-    background-color: hsl(23, 84%, 15%);
-    border:1px solid hsl(39, 95%, 59%);
-    box-shadow: 0 0 5px hsl(39, 95%, 59%);
-  }
+  opacity: 0.8;
+}
+section > * {
+  visibility: hidden;
+}
+section.visible > * {
+  visibility: visible;
+}
+
+.boxed {
+  padding: 10px;
+  background-color: hsl(23, 84%, 15%);
+  border:1px solid hsl(39, 95%, 59%);
+  box-shadow: 0 0 5px hsl(39, 95%, 59%);
 }
 
 #scanlines {
@@ -36,17 +45,6 @@ section {
   bottom: 0;
   background: transparent url("images/scanline.png");
   opacity: 0.2;
-}
-
-section {
-  position: absolute;
-  opacity: 0.8;
-}
-section > * {
-  display: none;
-}
-section.visible > * {
-  display: initial;
 }
 
 #weather {
