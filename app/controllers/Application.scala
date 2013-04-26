@@ -111,4 +111,10 @@ object Application extends Controller {
       HackerNews.stream map { Ok(_) }
     }
   }
+
+  def zendailyStream = Action {
+    Async {
+      ZenDaily.stream map { Ok(_) }
+    }
+  }
 }
