@@ -2,17 +2,20 @@
 
 @main("Welcome to Play 2.1") {
 
-    <div>
-      <section id="twitter">
+    <div id="wrapper">
+      <section id="twitter" class="boxed">
         <div class="tweeter">...</div>
         <p class="tweet">loading...</p>
       </section>
-      <section id="zendaily">
+      <section id="zendaily" class="boxed">
         Events: Hackday!
       </section>
-      <section id="weather">
+      <section id="weather" class="boxed">
         <span class="temp">0</span>
         <p class="descr">loading...</p>
+      </section>
+      <section id="france">
+        <img src="@routes.Assets.at("images/france.png")" width="250" alt="" />
       </section>
     </div>
 
