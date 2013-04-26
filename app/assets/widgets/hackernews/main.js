@@ -17,8 +17,11 @@ Widget("hackernews", {
       function render () {
 
         var head = json[Math.random() * json.length | 0];
-        node.find(".user_img").empty().append($("<img>").attr("src", head.user.profile_image_url));
-        node.find(".tweet").text(head.text);
+
+        if (head && head.user) {
+          node.find(".user_img").empty().append($("<img>").attr("src", head.user.profile_image_url));
+          node.find(".tweet").text(head.text);
+        }
 
         self.timer = setTimeout(function () {
           render();

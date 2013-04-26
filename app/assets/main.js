@@ -8,7 +8,7 @@
       }
     });
   }
-  setInterval(checkForNewVersion, 60000);
+  setInterval(checkForNewVersion, 10000);
 
   window.Widget = function (id, widget) {
     var node = $("#"+id);

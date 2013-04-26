@@ -16,14 +16,17 @@ Widget("twitter", {
       function render () {
 
         var head = json[Math.random() * json.length | 0];
-        node.find(".tweeter").text(head.user.screen_name);
-        node.find(".tweet").text(head.text);
-        var userImg = node.find(".user_img img"),
-          userImg2 = node.find(".user_img_2 img");
 
-        node.find(".user_img_3").empty().append(userImg2);
-        node.find(".user_img_2").empty().append(userImg);
-        node.find(".user_img").empty().append($("<img>").attr("src", head.user.profile_image_url));
+        if (head && head.user) {
+          node.find(".tweeter").text(head.user.screen_name);
+          node.find(".tweet").text(head.text);
+          var userImg = node.find(".user_img img"),
+            userImg2 = node.find(".user_img_2 img");
+
+          node.find(".user_img_3").empty().append(userImg2);
+          node.find(".user_img_2").empty().append(userImg);
+          node.find(".user_img").empty().append($("<img>").attr("src", head.user.profile_image_url));
+        }
 
         self.timer = setTimeout(function () {
           render();

@@ -12,11 +12,11 @@ object HackerNews {
     WS.url("http://api.twitter.com/1/statuses/user_timeline.json")
       .withQueryString("screen_name" -> "hnycombinator")
       .sign(OAuthCalculator(
-        Twitter.KEY, 
+        Twitter.KEY,
         Twitter.tokenPair
       ))
       .get
-      .map{ result => 
+      .map{ result =>
         result.json
       }
   }
