@@ -27,31 +27,57 @@ object Application extends Controller {
     Ok(views.html.index("Your new application is ready."))
   }
 
-  val timelineRead = 
-    __.read[Seq[(Long, Boolean, Long, Long)]](
+  implicit val timelineRead = 
+    __.read[Seq[(Long, Boolean, Long, Long, String, String, String)]](
       Reads.seq(
         (
           (__ \ "id").read[Long] and
           (__ \ "retweeted").read[Boolean] and
           (__ \ "retweet_count").read[Long] and
-          (__ \ "favorite_count").read[Long]
+          (__ \ "favorite_count").read[Long] and
+          (__ \ "text").read[String] and
+          (__ \ "user" \ "name").read[String] and
+          (__ \ "user" \ "screen_name").read[String]
         ).tupled
       )
     )
 
+    implicit val timeLineWrite =
+      Writes.seq(
+         (
+          (__ \ "id").write[Long] and
+          (__ \ "retweeted").write[Boolean] and
+          (__ \ "retweet_count").write[Long] and
+          (__ \ "favorite_count").write[Long] and
+          (__ \ "text").write[String] and
+          (__ \ "username").write[String] and
+          (__ \ "userscreen_name").write[String]
+        ).tupled
+      )
+    
   def timeline = Action { implicit request =>
       Async {
         retrieveTimeline map { js => 
-          timelineRead.reads(js) map { l =>
-            Ok(l.toString)
+          Json.fromJson[Seq[(Long, Boolean, Long, Long, String, String, String)]](js) map { l =>
+           val sortedL = l.sortWith((e1,e2) => (e1._3 + e1._4) > (e2._3 + e2._4))
+           val filteredL = sortedL.filter(e => !e._2)
+           Ok(Json.toJson(filteredL))
           } recoverTotal{ e => BadRequest(JsError.toFlatJson(e)) }
           
         }
       }
   }
 
+  def timelineAll = Action { implicit request => 
+    Async {
+      retrieveTimeline map { js => 
+        Ok(js)
+      } 
+    }
+  }
+
   def retrieveTimeline: Future[JsValue] = {
-    WS.url("https://api.twitter.com/1/statuses/home_timeline.json")
+    WS.url("https://api.twitter.com/1/statuses/home_timeline.json?count=100")
       .sign(OAuthCalculator(
         Twitter.KEY, 
         Twitter.tokenPair
