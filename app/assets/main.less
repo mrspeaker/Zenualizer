@@ -25,6 +25,13 @@ section {
 	opacity: 0.4;
 }
 
+section > * {
+  display: none;
+}
+section.visible > * {
+  display: initial;
+}
+
 #weather {
   position: absolute;
   right: 10px;

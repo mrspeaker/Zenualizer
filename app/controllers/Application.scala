@@ -17,6 +17,12 @@ import concurrent.ExecutionContext.Implicits.global
 
 object Application extends Controller {
 
+  val startTime = new java.util.Date().getTime
+
+  def version = Action {
+    Ok(JsNumber(startTime))
+  }
+
   def index = Action {
     Ok(views.html.index("Your new application is ready."))
   }
