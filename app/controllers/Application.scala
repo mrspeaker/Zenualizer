@@ -11,6 +11,9 @@ import play.api.libs.functional.syntax._
 
 import play.api.libs.concurrent.Execution.Implicits._
 
+import services._
+
+import concurrent.ExecutionContext.Implicits.global
 
 object Application extends Controller {
 
@@ -29,7 +32,6 @@ object Application extends Controller {
         ).tupled
       )
     )
-
 
   def timeline = Action { implicit request =>
       Async {
@@ -53,4 +55,11 @@ object Application extends Controller {
         result.json
       }
   }
+
+  def weather = Action {
+    Async {
+      Weather.now().map(Ok(_))
+    }
+  }
+
 }
