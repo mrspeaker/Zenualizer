@@ -10,9 +10,13 @@ Widget("zendaily", {
 
       json.forEach(function (e) {
 
-        console.log(e);
+        var start = new Date(e.start);
+        if (!start) {
+          return;
+        }
+
         $("<li></li>")
-          .text(e.author + " presents... " + e.type + ": " + e.summary)
+          .html("<span>" + start.getDate() + "/" + (start.getMonth() + 1) + "." + e.author + " presents:" + e.summary)
           .appendTo(node.find(".stream"))
       });
 
