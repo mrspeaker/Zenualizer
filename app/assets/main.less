@@ -16,15 +16,20 @@ section {
 }
 
 #scanlines {
+  z-index: 1000;
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
   background: transparent url("images/scanline.png");
-  opacity: 0.4;
+  opacity: 0.2;
 }
 
+section {
+  position: absolute;
+  opacity: 0.8;
+}
 section > * {
   display: none;
 }
@@ -33,7 +38,25 @@ section.visible > * {
 }
 
 #weather {
+  z-index: 20;
+  width: 300px;
   position: absolute;
   right: 10px;
   top: 10px;
+}
+
+#twitter {
+  z-index: 20;
+  width: 380px;
+
+  left: 10px;
+  top: 10px;
+}
+
+#zendaily {
+  z-index: 10;
+  right: 340px;
+  top: 10px;
+  left: 400px;
+  height: 300px;
 }
