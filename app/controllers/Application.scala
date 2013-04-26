@@ -14,6 +14,9 @@ import play.api.libs.concurrent.Execution.Implicits._
 import services._
 
 import concurrent.ExecutionContext.Implicits.global
+import play.api.Play
+
+
 
 object Application extends Controller {
 
@@ -68,7 +71,7 @@ object Application extends Controller {
       }
   }
 
-  def timelineAll = Action { implicit request => 
+  def timelineAll = Action { implicit request =>
     Async {
       retrieveTimeline map { js => 
         Ok(js)

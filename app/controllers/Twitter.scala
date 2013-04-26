@@ -8,10 +8,19 @@ import play.api.libs.ws._
 import play.api.libs.oauth._
 import views._
 import play.api.libs.json.{Json, JsValue}
+import com.typesafe.config._
+import java.io.File
 
 object Twitter extends Controller {
 
-  val KEY = ConsumerKey("fxee7Dm5Q62AgFtS1spWCA", "MT27sj5cyvW14OU1RsB0DB2HngUwgby72txFRe9Ls")
+  val credentialsPath = Play.current.configuration.getString("credentials.path").getOrElse("")
+  System.out.println("credentialsPath = " + credentialsPath)
+
+  val credentials =  ConfigFactory.parseFile(new File(credentialsPath))
+
+  //Play.current.configuration.getString("consumer_key").getOrElse("")
+  val KEY = ConsumerKey(credentials.getString("consumer_key"), 
+    credentials.getString("consumer_secret"))
 
   val TWITTER = OAuth(ServiceInfo(
     "https://api.twitter.com/oauth/request_token",
@@ -41,8 +50,8 @@ object Twitter extends Controller {
   }
 
   val tokenPair = RequestToken(
-    "1379368003-NI5aCcXX8iECYdpxoShCDFLe7WJlpje5u7aTL6M",
-    "AQy3Elm2H8mCf7oGmspLs7BlO4XAOMNL0uXJ3gqLTbI"
+    credentials.getString("access_token"),
+    credentials.getString("access_token_secret")
   )
 
   def sessionTokenPair(implicit request: RequestHeader): Option[RequestToken] = {
