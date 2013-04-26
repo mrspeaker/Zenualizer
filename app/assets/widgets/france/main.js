@@ -2,7 +2,7 @@
 
 Widget("france", {
   cloudConf: { x: 31, y: 21, z: 6, w: 3, h: 3, imgH: 256, imgW: 256 },
-  franceCrop: { x: 20, y: 90, w: 613, h: 693 },
+  franceCrop: { x: 20, y: 90, w: 613, h: 620 },
   getCloud: function (z, x, y) {
     var d = $.Deferred();
     var img = new Image();
@@ -17,6 +17,10 @@ Widget("france", {
   },
   init: function (node) {
     this.update(node);
+  },
+  smoothstep: function (edge0, edge1, x) {
+    x = (x - edge0)/(edge1 - edge0); 
+    return x;
   },
   update: function (node) {
     var self = this;
@@ -45,15 +49,23 @@ Widget("france", {
       var ctx = cloud.getContext("2d");
       var data = mapctx.getImageData(self.franceCrop.x, self.franceCrop.y, self.franceCrop.w, self.franceCrop.h).data;
       var output = ctx.createImageData(cloud.width, cloud.height);
-      var w = map.width, h = map.height;
+      var w = cloud.width, h = cloud.height;
+      var B = 30;
+      function border (x, y) {
+        return  Math.min(1, x/B)*
+                Math.min(1, y/B)*
+                Math.min(1, (w-x)/B)*
+                Math.min(1, (h-y)/B);
+      }
+
       for (var y = 0; y < h; y += 1) {
        for (var x = 0; x < w; x += 1) {
          var i = (y*w + x)*4;
-         var intensity = ((data[i]+data[i+1]+data[i+2])/(256*3))*data[i+3];
+         var intensity = /*((data[i]+data[i+1]+data[i+2])/(256*3))**/data[i+3];
          output.data[i] = 255;
-         output.data[i+1] = 127;
-         output.data[i+2] = 0;
-         output.data[i+3] = intensity;
+         output.data[i+1] = 150;
+         output.data[i+2] = 50;
+         output.data[i+3] = border(x, y)*0.6*self.smoothstep(-0.5, 1.0, intensity);
        }
       }
       ctx.putImageData(output, 0, 0);
