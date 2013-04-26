@@ -6,6 +6,7 @@ Widget("twitter", {
     return this.update(node);
   },
   rate: 60000,
+  flipRate: 8000,
   update: function (node) {
 
     var self = this;
@@ -30,7 +31,7 @@ Widget("twitter", {
 
         self.timer = setTimeout(function () {
           render();
-        }, 5000);
+        }, self.flipRate);
 
       }
 

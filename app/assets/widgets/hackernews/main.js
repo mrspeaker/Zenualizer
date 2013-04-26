@@ -20,7 +20,7 @@ Widget("hackernews", {
 
         if (head && head.user) {
           node.find(".user_img").empty().append($("<img>").attr("src", head.user.profile_image_url));
-          node.find(".tweet").text(head.text);
+          node.find(".tweet").text(head.text.replace(/http.*/g, ""));
         }
 
         self.timer = setTimeout(function () {
