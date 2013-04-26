@@ -19,17 +19,17 @@ object Application extends Controller {
 
 
   def timeline = Action { implicit request =>
-    Twitter.sessionTokenPair match {
-      case Some(credentials) => Async {
-        retrieveTimeline(credentials) map { js => Ok(js) }
+      Async {
+        retrieveTimeline() map { js => Ok(js) }
       }
-      case _ => Redirect(routes.Twitter.authenticate)
-    }
   }
 
-  def retrieveTimeline(credentials: RequestToken): Future[JsValue] = {
+  def retrieveTimeline(): Future[JsValue] = {
     WS.url("https://api.twitter.com/1/statuses/home_timeline.json")
-      .sign(OAuthCalculator(Twitter.KEY, credentials))
+      .sign(OAuthCalculator(
+        Twitter.KEY, 
+        Twitter.tokenPair
+      ))
       .get
       .map{ result => 
         result.json

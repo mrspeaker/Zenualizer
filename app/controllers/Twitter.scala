@@ -40,6 +40,11 @@ object Twitter extends Controller {
       })
   }
 
+  val tokenPair = RequestToken(
+    "1379368003-NI5aCcXX8iECYdpxoShCDFLe7WJlpje5u7aTL6M",
+    "AQy3Elm2H8mCf7oGmspLs7BlO4XAOMNL0uXJ3gqLTbI"
+  )
+
   def sessionTokenPair(implicit request: RequestHeader): Option[RequestToken] = {
     for {
       token <- request.session.get("token")
