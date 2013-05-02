@@ -4,16 +4,16 @@
     font-size: 3em;
     font-weight: bold;
   }
-  .imgs {
-  	margin-top:2px;
+  .user_imgs {
+  	margin-top: 2px;
   	float: left;
   	width: 60px;
-  }
-  .user_img_2 {
-  	opacity: 0.5;
-  }
-   .user_img_3 {
-  	opacity: 0.2;
+    img {
+      opacity: 0.2;
+      &.current {
+        opacity: 1;
+      }
+    }
   }
   .deets {
   	overflow: hidden;

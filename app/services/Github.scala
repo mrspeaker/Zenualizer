@@ -12,8 +12,6 @@ import play.api.libs.functional.syntax._
 
 import play.api.libs.concurrent.Execution.Implicits._
 
-import org.joda.time._
-
 
 object Github {
 

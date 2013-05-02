@@ -14,28 +14,30 @@ Widget("twitter", {
     this.timer && clearTimeout(this.timer);
 
     return Q.when($.getJSON("/twitter/daily")).then(function (json) {
-      function render () {
+      var topTweets = _.take(json, 5);
+      var i = 0;
 
-        var head = json[Math.random() * json.length | 0];
+      var $imgContainer = node.find(".user_imgs").empty();
+      var userImages = _.map(topTweets, function (twitt) {
+          return $('<img src="'+twitt.userprofile_image_url+'" />');
+        });
+      _.each(userImages, function (img) {
+        $imgContainer.append(img);
+      });
+
+      function next () {
+        var head = topTweets[i];
 
         if (head && head.text) {
           node.find(".tweeter").text(head.userscreen_name);
           node.find(".tweet").text(head.text);
-          var userImg = node.find(".user_img img"),
-            userImg2 = node.find(".user_img_2 img");
-
-          node.find(".user_img_3").empty().append(userImg2);
-          node.find(".user_img_2").empty().append(userImg);
-          node.find(".user_img").empty().append($("<img>").attr("src", head.userprofile_image_url));
+          userImages[i].addClass("current").siblings().removeClass("current");
         }
 
-        self.timer = setTimeout(function () {
-          render();
-        }, self.flipRate);
-
+        i = i<topTweets.length-1 ? i+1 : 0; // rotate
       }
 
-      render();
+      self.timer = setInterval(next, self.flipRate);
 
     });
   }
