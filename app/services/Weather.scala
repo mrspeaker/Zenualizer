@@ -1,12 +1,13 @@
 package services
 
-import scala.concurrent.Future
+import scala.concurrent._
 
+import play.api._
 import play.api.Play.current
 import play.api.libs.ws._
 import play.api.libs.json._
 
-import concurrent.ExecutionContext
+import play.api.libs.concurrent.Execution.Implicits._
 
 object Weather {
 
@@ -14,16 +15,7 @@ object Weather {
   val lng = current.configuration.getString("weather.location.lng").get
   val units = current.configuration.getString("weather.units").getOrElse("metric")
 
-  {
-    println(WS.url("http://api.openweathermap.org/data/2.5/weather")
-      .withQueryString(
-        ("lat", lat),
-        ("lng", lng),
-        ("units", units)
-      ).queryString)
-  }
-
-  def now()(implicit ec: ExecutionContext): Future[JsObject] = 
+  def now(): Future[JsObject] = 
     WS.url("http://api.openweathermap.org/data/2.5/weather")
       .withQueryString(
         ("lat", lat),

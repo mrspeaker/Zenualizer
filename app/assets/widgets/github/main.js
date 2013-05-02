@@ -8,7 +8,7 @@ Widget("github", {
   rate: 60000 * 5,
   update: function (node) {
 
-    return $.getJSON("/github/eventStream").then(function (json) {
+    return Q.when($.getJSON("/github/eventStream")).then(function (json) {
 
       var self = this;
 

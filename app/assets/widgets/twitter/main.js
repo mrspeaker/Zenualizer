@@ -13,20 +13,20 @@ Widget("twitter", {
 
     this.timer && clearTimeout(this.timer);
 
-    return $.getJSON("/timelineAll").then(function (json) {
+    return Q.when($.getJSON("/twitter/daily")).then(function (json) {
       function render () {
 
         var head = json[Math.random() * json.length | 0];
 
-        if (head && head.user) {
-          node.find(".tweeter").text(head.user.screen_name);
+        if (head && head.text) {
+          node.find(".tweeter").text(head.userscreen_name);
           node.find(".tweet").text(head.text);
           var userImg = node.find(".user_img img"),
             userImg2 = node.find(".user_img_2 img");
 
           node.find(".user_img_3").empty().append(userImg2);
           node.find(".user_img_2").empty().append(userImg);
-          node.find(".user_img").empty().append($("<img>").attr("src", head.user.profile_image_url));
+          node.find(".user_img").empty().append($("<img>").attr("src", head.userprofile_image_url));
         }
 
         self.timer = setTimeout(function () {

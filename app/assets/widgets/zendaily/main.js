@@ -6,7 +6,7 @@ Widget("zendaily", {
   },
   rate: 60000 * 5,
   update: function (node) {
-    return $.getJSON("/zendaily/stream").then(function (json) {
+    return Q.when($.getJSON("/zendaily/stream")).then(function (json) {
 
       node.find(".stream").empty();
 

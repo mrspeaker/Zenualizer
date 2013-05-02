@@ -4,24 +4,23 @@
 
 # Home page
 GET     /                           controllers.Application.index
-GET     /auth                       controllers.Twitter.authenticate
-GET     /timeline                   controllers.Application.timeline
-GET     /timelineAll                controllers.Application.timelineAll
-
-GET     /weather                    controllers.Application.weather
-
 GET     /version                    controllers.Application.version
 
+GET     /twitter/daily              controllers.TwitterTimeline.timeline
+GET     /twitter/all                controllers.TwitterTimeline.timelineAll
+
+GET     /weather                    controllers.Weather.weather
+GET     /map/*req                   controllers.Weather.proxyWeatherMap(req: String)
+
 # GITHUB stuff
-GET     /github/followings                  controllers.Application.githubFollowings
-GET     /github/eventStream                 controllers.Application.githubEventStream
+GET     /github/followings          controllers.Github.followingsStream
+GET     /github/eventStream         controllers.Github.eventStream
 
 # HN
-GET     /hackernews/stream                 controllers.Application.hackerNewsStream
+GET     /hackernews/stream          controllers.HackerNews.stream
 
-# ZenDaily
-GET     /zendaily/stream                 controllers.Application.zendailyStream
-GET     /map/*req               controllers.Application.proxyWeatherMap(req: String)
+# Zendaily
+GET     /zendaily/stream            controllers.ZenDaily.stream
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)

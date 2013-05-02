@@ -12,7 +12,7 @@ Widget("hackernews", {
 
     this.timer && clearTimeout(this.timer);
 
-    return $.getJSON("/hackernews/stream").then(function (json) {
+    return Q.when($.getJSON("/hackernews/stream")).then(function (json) {
 
       function render () {
 
