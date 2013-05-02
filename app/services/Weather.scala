@@ -27,6 +27,7 @@ object Weather {
       .map { json =>
         Json.obj(
           ("temp", (json \ "main" \ "temp").as[JsNumber]),
+          ("brief", ((json \ "weather")(0) \ "main").as[JsString]),
           ("description", (json \\ "description")(0).as[JsString])
         )
       }

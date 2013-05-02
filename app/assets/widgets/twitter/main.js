@@ -30,7 +30,7 @@ Widget("twitter", {
 
         if (head && head.text) {
           node.find(".tweeter").text(head.userscreen_name);
-          node.find(".tweet").text(head.text);
+          node.find(".tweet").html(head.text);
           userImages[i].addClass("current").siblings().removeClass("current");
         }
 
