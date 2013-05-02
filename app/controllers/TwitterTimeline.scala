@@ -9,6 +9,9 @@ import play.api.libs.json._
 import play.api.libs.functional.syntax._
 import play.api.libs.concurrent.Execution.Implicits._
 
+import play.api.cache._
+import play.api.Play.current
+
 object TwitterTimeline extends Controller {
 
   implicit val timelineRead = 
@@ -42,7 +45,8 @@ object TwitterTimeline extends Controller {
       ).tupled
     )
     
-  def timeline = Action { implicit request =>
+  def timeline = Cached("timeline", 55) {
+    Action { implicit request =>
       Async {
         services.Twitter.timeline map { js => 
           Json.fromJson[Seq[(Long, Boolean, Long, Long, String, String, String, String)]](js) map { l =>
@@ -53,8 +57,10 @@ object TwitterTimeline extends Controller {
           
         }
       }
+    }
   }
 
+  /*
   def timelineAll = Action { implicit r =>
     Async {
       services.Twitter.timeline map { js =>
@@ -62,5 +68,5 @@ object TwitterTimeline extends Controller {
       }
     }
   }
-
+  */
 }

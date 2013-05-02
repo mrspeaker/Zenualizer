@@ -11,11 +11,16 @@ import play.api.libs.json._
 
 import play.api.libs.concurrent.Execution.Implicits._
 
+import play.api.cache._
+import play.api.Play.current
+
 object ZenDaily extends Controller {
 
-  def stream = Action {
-    Async {
-      services.ZenDaily.topics map { Ok(_) }
+  def stream = Cached("zendaily_topics", 55) {
+    Action {
+      Async {
+        services.ZenDaily.topics map { Ok(_) }
+      }
     }
   }
 

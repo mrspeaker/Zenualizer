@@ -7,7 +7,7 @@ GET     /                           controllers.Application.index
 GET     /version                    controllers.Application.version
 
 GET     /twitter/daily              controllers.TwitterTimeline.timeline
-GET     /twitter/all                controllers.TwitterTimeline.timelineAll
+# GET     /twitter/all                controllers.TwitterTimeline.timelineAll
 
 GET     /weather                    controllers.Weather.weather
 GET     /map/*req                   controllers.Weather.proxyWeatherMap(req: String)

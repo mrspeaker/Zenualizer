@@ -15,6 +15,9 @@ import play.api.libs.concurrent.Execution.Implicits._
 
 import org.joda.time._
 
+import play.api.cache._
+import play.api.Play.current
+
 object Github extends Controller {
 
   val readLogins = __.read[JsArray] flatMap { arr => Reads.seq((__ \ 'login).read[String]) }
@@ -39,15 +42,19 @@ object Github extends Controller {
     }
   }
 
-  def followingsStream = Action {
-    Async {
-      followings map { Ok(_) }
+  def followingsStream = Cached("github_following", 55) {
+    Action {
+      Async {
+        followings map { Ok(_) }
+      }
     }
   }
 
-  def eventStream = Action {
-    Async {
-      allEvents map { js => Ok(Json.toJson(js)) }
+  def eventStream = Cached("github_event", 55) {
+    Action {
+      Async {
+        allEvents map { js => Ok(Json.toJson(js)) }
+      }
     }
   }
 }
