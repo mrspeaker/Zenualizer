@@ -14,7 +14,7 @@ Widget("twitter", {
     this.timer && clearTimeout(this.timer);
 
     return Q.when($.getJSON("/twitter/daily")).then(function (json) {
-      var topTweets = _.take(json, 5);
+      var topTweets = _.take(json, 4);
       var i = 0;
 
       var $imgContainer = node.find(".user_imgs").empty();
