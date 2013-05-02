@@ -38,6 +38,7 @@ Widget("twitter", {
       }
 
       self.timer = setInterval(next, self.flipRate);
+      next();
 
     });
   }
