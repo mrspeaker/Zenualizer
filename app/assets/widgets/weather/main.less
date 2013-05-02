@@ -1,7 +1,9 @@
+@import "../../commons";
 
 #weather {
   text-align: center;
   .temp {
+    color: @color2;
     font-size: 3em;
     font-weight: bold;
     &:after {
@@ -10,8 +12,10 @@
       vertical-align: top;
     }
   }
+  .brief {
+    color: @color2;
+  }
   .descr {
     font-style: italic;
-    opacity: 0.5;
   }
 }
